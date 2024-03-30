@@ -42,7 +42,7 @@ We'll use the **tidyverse** package for much of the data wrangling and visualisa
 
 You will need to install the packages and to install dsbox copy the following code into the console: 
 
-```
+```{r}
 install.packages("devtools")
 devtools::install_github("tidyverse/dsbox")
 ```
@@ -73,9 +73,35 @@ The question is phrased as the following.
 Answers to this question are stored in the `harass5` variable in our dataset.
 
 1.  What are the possible responses to this question and how many respondents chose each of these answers?
+```{r}
+gss16 %>%
+  filter(harass5 == "Yes", na.rm = TRUE) %>%
+  nrow()
+```
+```{r}
+gss16 %>%
+  filter(harass5 == "No", na.rm = TRUE) %>%
+  nrow()
+```
+```{r}
+gss16 %>%
+  filter(harass5 != "Yes" ,harass5 != "No", na.rm = TRUE) %>%
+  nrow()
+```
+
 
 2.  What percent of the respondents for whom this question is applicable\
     (i.e. excluding `NA`s and `Does not apply`s) have been harassed by their superiors or co-workers at their job.
+```{r}
+gss16 %>%
+  select(harass5) %>%
+  filter(harass5 != "Does not apply (i do not have a job/superior/co-worker)", na.rm = TRUE ) %>%
+  mutates = mutate(harass5 / sum())
+```
+
+
+
+
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
@@ -86,6 +112,11 @@ The responses to these questions are recorded in the `emailhr` and `emailmin` va
 For example, if the response is 2.5 hrs, this would be recorded as `emailhr = 2` and `emailmin = 30`.
 
 3.  Create a new variable called `email` that combines these two variables to reports the number of minutes the respondents spend on email weekly.
+
+
+
+
+
 
 4.  Visualize the distribution of this new variable.
     Find the mean and the median number of minutes respondents spend on email weekly.
